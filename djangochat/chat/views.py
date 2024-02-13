@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,  JsonResponse
 # importer les models
 from .models import *
 
@@ -26,11 +26,11 @@ def checkview(request):
     
     # vérifie si le room_name entré par l'utilisateur existe 
     if Room.objects.filter(name = room).exists():
-        return redirect('/'+ room + '/?username' + username)
+        return redirect('/'+ room + '/?username=' + username)
     else:
         new_room = Room.objects.create(name = room)
         new_room.save()
-        return redirect('/'+ room + '/?username' + username) 
+        return redirect('/'+ room + '/?username=' + username) 
         
 
 # la fonction send s'occupera d'envoyer les messages
@@ -42,3 +42,9 @@ def send(request):
     new_message = Message.objects.create(value = message, user = username, room = room_id)
     new_message.save()
     return HttpResponse('Message envoyé avec succès')
+
+# function pour récupérer les messages
+def getMessages(request, room):
+    room_details = Room.objects.get(name=room)
+    messages = Message.objects.filter(room = room_details.id).order_by('date')
+    return JsonResponse({"messages" : list(messages.values())})
