@@ -16,6 +16,7 @@ def room(request, room):
     return render(request, 'room.html', {
         'username': username,
         'room': room,
+        'room_details': room_details, #c'est un objet, l'ensemble formé par le nom et l'id du room
     })
 
 # function permettant de vérifier les informations que l'utilisateur a entré dans le formulaire du home.html, l'on récupère les informations par la méthode POST
