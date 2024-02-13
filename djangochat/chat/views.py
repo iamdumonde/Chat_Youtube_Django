@@ -11,7 +11,9 @@ def home(request):
 
 # function to display room.html
 def room(request, room):
-    pass
+    username = request.GET.get('username')
+    room_details = Room.objects.get(name=room)
+    return render(request, 'room.html')
 
 # function permettant de vérifier les informations que l'utilisateur a entré dans le formulaire du home.html, l'on récupère les informations par la méthode POST
 def checkview(request):
