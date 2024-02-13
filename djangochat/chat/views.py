@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.http import HttpResponse
 # importer les models
 from .models import *
 
@@ -32,3 +32,13 @@ def checkview(request):
         new_room.save()
         return redirect('/'+ room + '/?username' + username) 
         
+
+# la fonction send s'occupera d'envoyer les messages
+def send(request):
+    message = request.POST['message']
+    username = request.POST['username']
+    room_id = request.POST['room_id']
+    
+    new_message = Message.objects.create(value = message, user = username, room = room_id)
+    new_message.save()
+    return HttpResponse('Message envoyé avec succès')
