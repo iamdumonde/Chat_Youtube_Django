@@ -10,7 +10,7 @@ def home(request):
     return render(request, 'home.html')
 
 # function to display room.html
-def room(request):
+def room(request, room):
     pass
 
 # function permettant de vérifier les informations que l'utilisateur a entré dans le formulaire du home.html, l'on récupère les informations par la méthode POST
